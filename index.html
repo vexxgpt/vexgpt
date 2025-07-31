@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VexGPT - Yapay Zeka Destekli Futbol Asistanı</title>
+  <title>VexGPT - AI-Powered Football Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary-color: #4CAF50; /* Green */
+      --secondary-color: #FFC107; /* Amber */
+      --dark-color: #212121;
+      --light-color: #fafafa;
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -12,61 +22,99 @@
     }
 
     body {
-      background: url('https://i.hizliresim.com/ruepzsb.jpeg') no-repeat center center fixed;
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('http://googleusercontent.com/file_content/0') no-repeat center center fixed;
       background-size: cover;
       height: 100vh;
-      color: white;
+      color: var(--light-color);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
       padding: 20px;
-      font-family: 'Segoe UI', sans-serif;
-      text-shadow: 0 0 8px #000;
+      font-family: 'Roboto', sans-serif;
+      text-shadow: 0 0 5px var(--dark-color);
+    }
+
+    .container {
+      max-width: 90%;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 40px;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     h1 {
-      font-size: 3rem;
-      margin-bottom: 15px;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 10px;
+      font-weight: 700;
+      color: var(--primary-color);
     }
 
-    p {
-      font-size: 1.3rem;
+    .slogan {
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
       margin-bottom: 30px;
+      max-width: 700px;
+      font-weight: 400;
+    }
+
+    .app-description {
+      font-size: clamp(0.9rem, 2vw, 1.2rem);
+      margin-bottom: 40px;
       max-width: 600px;
+      font-weight: 400;
     }
 
-    .store-badge img {
-      width: 220px;
+    .store-badges {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .store-badges a {
+      display: block;
+    }
+
+    .store-badges img {
+      width: 180px;
       height: auto;
-      transition: transform 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border-radius: 10px;
     }
 
-    .store-badge img:hover {
-      transform: scale(1.05);
+    .store-badges img:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
     }
 
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2rem;
+    @media (max-width: 768px) {
+      .container {
+        padding: 30px;
       }
-      p {
-        font-size: 1rem;
-      }
-      .store-badge img {
-        width: 180px;
+      .store-badges img {
+        width: 150px;
       }
     }
   </style>
 </head>
 <body>
-  <h1>VexGPT</h1>
-  <p>Yapay zeka ile futbol tahminlerini keşfet! VexGPT şimdi Google Play'de seni bekliyor.</p>
-  <div class="store-badge">
-    <a href="https://play.google.com/store/apps/details?id=com.vexgpt.app" target="_blank">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play'den indir" />
-    </a>
+  <div class="container">
+    <h1>VexGPT</h1>
+    <p class="slogan">Your Ultimate AI-Powered Football Assistant.</p>
+    <p class="app-description">
+      Discover football predictions with the power of artificial intelligence! VexGPT is now available on Google Play and coming soon to the App Store.
+    </p>
+    <div class="store-badges">
+      <a href="https://play.google.com/store/apps/details?id=com.vexgpt.app" target="_blank" rel="noopener noreferrer">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" />
+      </a>
+      <a href="#" target="_blank" rel="noopener noreferrer">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store" />
+      </a>
+    </div>
   </div>
 </body>
 </html>
