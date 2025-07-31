@@ -37,19 +37,14 @@
       max-width: 600px;
     }
 
-    a.button {
-      display: inline-block;
-      padding: 15px 30px;
-      background-color: #00c853;
-      color: white;
-      text-decoration: none;
-      border-radius: 12px;
-      font-size: 1.2rem;
-      transition: background-color 0.3s ease;
+    .store-badge img {
+      width: 220px;
+      height: auto;
+      transition: transform 0.2s ease;
     }
 
-    a.button:hover {
-      background-color: #009624;
+    .store-badge img:hover {
+      transform: scale(1.05);
     }
 
     @media (max-width: 600px) {
@@ -59,9 +54,8 @@
       p {
         font-size: 1rem;
       }
-      a.button {
-        padding: 12px 24px;
-        font-size: 1rem;
+      .store-badge img {
+        width: 180px;
       }
     }
   </style>
@@ -69,8 +63,10 @@
 <body>
   <h1>VexGPT</h1>
   <p>Yapay zeka ile futbol tahminlerini keşfet! VexGPT şimdi Google Play'de seni bekliyor.</p>
-  <a class="button" href="https://play.google.com/store/apps/details?id=com.vexgpt.app" target="_blank">
-    Google Play'den İndir
-  </a>
+  <div class="store-badge">
+    <a href="https://play.google.com/store/apps/details?id=com.vexgpt.app" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play'den indir" />
+    </a>
+  </div>
 </body>
 </html>
