@@ -142,13 +142,108 @@
   </div>
 
   <script>
-    // Soft auto redirect (Android only)
-    if (/android/i.test(navigator.userAgent)) {
-      setTimeout(() => {
-        window.location.href =
-          "https://play.google.com/store/apps/details?id=com.vexgpt.app";
-      }, 900);
-    }
+    (function () {
+      var ua = navigator.userAgent || navigator.vendor || window.opera;
+
+      var isAndroid = /android/i.test(ua);
+      var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+      var isMetaInApp = /(FBAN|FBAV|Instagram|FB_IAB)/i.test(ua);
+      var isChromeOnAndroid = isAndroid && /Chrome\/\d+/i.test(ua);
+      var isMobile = isAndroid || isIOS;
+
+      // Store links
+      var iosHttps = "https://apps.apple.com/app/scouter-soccer-live-scores/id1569637963";
+      var iosItms  = "itms-apps://apps.apple.com/app/id1569637963";
+      var playHttps = "https://play.google.com/store/apps/details?id=com.artlines.scouter";
+      var playMarket = "market://details?id=com.artlines.scouter";
+      var playIntent = "intent://details?id=com.artlines.scouter#Intent;scheme=market;package=com.android.vending;end";
+
+      function setClickTargets(href) {
+        var btn = document.getElementById("downloadBtn");
+        //var b1 = document.getElementById("storeBadge1");
+        //var b2 = document.getElementById("storeBadge2");
+        btn.setAttribute("href", href);
+        //b1.setAttribute("href", isIOS ? iosHttps : href);
+        //b2.setAttribute("href", isAndroid ? playHttps : href);
+      }
+
+      // Build sequences per platform
+      var autoSeq = [];
+      var manualHref = "https://scouter-app.co";
+
+      if (isIOS) {
+        autoSeq = [iosItms, iosHttps];
+        manualHref = iosHttps;
+      } else if (isAndroid) {
+        if (isMetaInApp || isChromeOnAndroid) {
+          autoSeq = [playIntent, playMarket, playHttps];
+        } else {
+          autoSeq = [playMarket, playHttps];
+        }
+        manualHref = playHttps;
+      } else {
+        // Desktop: no auto-redirect attempts
+        manualHref = "https://scouter-app.co";
+      }
+
+      setClickTargets(manualHref);
+
+      // Try a sequence of links safely
+      function tryOpenSequence(seq, fallbackHref, showHint) {
+        // Filter out undefined / empty URLs
+        seq = (seq || []).filter(Boolean);
+        if (!seq.length) {
+          if (showHint) document.getElementById("inAppHint").classList.remove("hidden");
+          setClickTargets(fallbackHref);
+          return;
+        }
+        var i = 0;
+        (function next() {
+          if (i >= seq.length) {
+            if (showHint) document.getElementById("inAppHint").classList.remove("hidden");
+            setClickTargets(fallbackHref);
+            return;
+          }
+          var url = seq[i++];
+          try {
+            window.location.assign(url);
+          } catch (e) {
+            // ignore and continue
+          }
+          setTimeout(next, 500);
+        })();
+      }
+
+      // Auto-try only when we actually have a candidate
+      setTimeout(function () {
+        if (!isMobile) return;                 // desktop: do nothing
+        if (!autoSeq.length) return;           // safety guard
+        if (!isMetaInApp) {
+          // Non Meta IAB: attempt just the first usable URL
+          tryOpenSequence([autoSeq[0]].filter(Boolean), manualHref, false);
+        } else {
+          // Meta IAB: attempt full sequence, show hint if blocked
+          tryOpenSequence(autoSeq, manualHref, true);
+        }
+      }, 250);
+
+      // Retry on first user gesture (helps iOS IAB)
+      var fired = false;
+      function onFirstGesture() {
+        if (fired) return;
+        fired = true;
+        if (autoSeq.length) tryOpenSequence(autoSeq, manualHref, true);
+      }
+      document.addEventListener("click", onFirstGesture, { once: true, passive: true });
+      document.addEventListener("touchstart", onFirstGesture, { once: true, passive: true });
+
+      document.addEventListener("visibilitychange", function(){
+        if (document.visibilityState === "visible" && !fired && autoSeq.length) {
+          tryOpenSequence(autoSeq, manualHref, true);
+          fired = true;
+        }
+      });
+    })();
   </script>
 </body>
 </html>
