@@ -142,13 +142,104 @@
   </div>
 
   <script>
-    // Soft auto redirect (Android only)
-    if (/android/i.test(navigator.userAgent)) {
-      setTimeout(() => {
-        window.location.href =
-          "https://play.google.com/store/apps/details?id=com.vexgpt.app";
-      }, 900);
+(function () {
+  var ua = navigator.userAgent || navigator.vendor || window.opera;
+
+  var isAndroid = /android/i.test(ua);
+  var isMetaInApp = /(FBAN|FBAV|Instagram|FB_IAB)/i.test(ua);
+  var isChromeOnAndroid = isAndroid && /Chrome\/\d+/i.test(ua);
+  var isMobile = isAndroid;
+
+  // -----------------------
+  // ANDROID STORE LINKS
+  // -----------------------
+  var playHttps  = "https://play.google.com/store/apps/details?id=com.vexgpt.app";
+  var playMarket = "market://details?id=com.vexgpt.app";
+  var playIntent = "intent://details?id=com.vexgpt.app#Intent;scheme=market;package=com.android.vending;end";
+
+  function setClickTargets(href) {
+    var btn = document.getElementById("downloadBtn");
+    if (btn) btn.setAttribute("href", href);
+  }
+
+  // -----------------------
+  // REDIRECT SEQUENCE
+  // -----------------------
+  var autoSeq = [];
+  var manualHref = "https://vexxgpt.github.io/vexgpt/"; // desktop / fallback
+
+  if (isAndroid) {
+    if (isMetaInApp || isChromeOnAndroid) {
+      autoSeq = [playIntent, playMarket, playHttps];
+    } else {
+      autoSeq = [playMarket, playHttps];
     }
-  </script>
+    manualHref = playHttps;
+  }
+
+  setClickTargets(manualHref);
+
+  // -----------------------
+  // SAFE AUTO REDIRECT
+  // -----------------------
+  function tryOpenSequence(seq, fallbackHref, showHint) {
+    seq = (seq || []).filter(Boolean);
+    if (!seq.length) {
+      setClickTargets(fallbackHref);
+      return;
+    }
+
+    var i = 0;
+    (function next() {
+      if (i >= seq.length) {
+        setClickTargets(fallbackHref);
+        return;
+      }
+
+      var url = seq[i++];
+      try {
+        window.location.assign(url);
+      } catch (e) {}
+
+      setTimeout(next, 500);
+    })();
+  }
+
+  // -----------------------
+  // AUTO TRY
+  // -----------------------
+  setTimeout(function () {
+    if (!isMobile) return;
+    if (!autoSeq.length) return;
+
+    if (!isMetaInApp) {
+      tryOpenSequence([autoSeq[0]], manualHref, false);
+    } else {
+      tryOpenSequence(autoSeq, manualHref, true);
+    }
+  }, 250);
+
+  // -----------------------
+  // RETRY ON USER GESTURE
+  // -----------------------
+  var fired = false;
+  function onFirstGesture() {
+    if (fired) return;
+    fired = true;
+    if (autoSeq.length) tryOpenSequence(autoSeq, manualHref, true);
+  }
+
+  document.addEventListener("click", onFirstGesture, { once: true, passive: true });
+  document.addEventListener("touchstart", onFirstGesture, { once: true, passive: true });
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible" && !fired && autoSeq.length) {
+      tryOpenSequence(autoSeq, manualHref, true);
+      fired = true;
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
