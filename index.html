@@ -1,143 +1,56 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>VexGPT — Download</title>
-
+  <title>Scouter — Download</title>
   <style>
-    :root {
-      --brand:#1fa64a;
-      --brandDark:#16823a;
-      --glow:rgba(31,166,74,.45);
-    }
-
+    :root { --brand:#4a8b38; --brandDark:#3a6f2b; }
     body {
-      margin:0;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-      background:radial-gradient(circle at top,#101710,#050805 70%);
-      color:#fff;
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background:#f7f7f7; color:#111; display:flex; min-height:100vh; align-items:center; justify-content:center;
     }
-
-    .wrap {
-      width:100%;
-      max-width:520px;
-      padding:24px;
-      text-align:center;
-    }
-
+    .wrap { width:100%; max-width:520px; padding:24px; text-align:center; }
     .card {
-      background:linear-gradient(180deg,#0e150e,#070b07);
-      border-radius:18px;
-      padding:32px 22px;
-      box-shadow:0 20px 60px rgba(0,0,0,.6);
-      animation:fadeUp .7s ease;
+      background:#fff; border-radius:16px; padding:28px 20px; box-shadow:0 10px 30px rgba(0,0,0,.06);
     }
-
-    @keyframes fadeUp {
-      from {opacity:0; transform:translateY(20px);}
-      to {opacity:1; transform:none;}
-    }
-
-    .logo {
-      width:210px;
-      margin:0 auto 18px;
-      display:block;
-      filter:drop-shadow(0 0 12px var(--glow));
-    }
-
-    h1 {
-      margin:0 0 8px;
-      font-size:30px;
-      font-weight:900;
-      letter-spacing:.4px;
-    }
-
-    p.sub {
-      margin:0 0 26px;
-      font-size:16px;
-      line-height:1.45;
-      color:#cfead7;
-    }
-
+    .logo { width:220px; height:auto; margin:0 auto 16px; display:block; }
+    h1 { margin:0 0 6px; font-size:28px; font-weight:800; }
+    p.sub { margin:0 0 22px; color:#555; }
     .cta {
-      display:inline-block;
-      padding:16px 26px;
-      border-radius:12px;
-      font-size:18px;
-      font-weight:800;
-      color:#fff;
-      text-decoration:none;
-      background:linear-gradient(135deg,var(--brand),#29d866);
-      box-shadow:0 0 0 0 var(--glow);
-      transition:.25s ease;
+      display:inline-block; padding:14px 22px; border-radius:10px; font-weight:700; font-size:18px;
+      background:var(--brand); color:#fff; text-decoration:none; transition:.2s ease;
     }
-
-    .cta:hover {
-      transform:translateY(-2px) scale(1.02);
-      box-shadow:0 0 24px 6px var(--glow);
-      background:linear-gradient(135deg,#29d866,var(--brand));
-    }
-
-    .badge {
-      margin-top:18px;
-    }
-
-    .badge img {
-      height:46px;
-      transition:.2s ease;
-      filter:drop-shadow(0 0 10px rgba(0,0,0,.6));
-    }
-
-    .badge img:hover {
-      transform:scale(1.06);
-    }
-
-    .hint {
-      margin-top:14px;
-      font-size:13px;
-      color:#9acfb0;
-    }
+    .cta:hover { background:var(--brandDark); }
+    .badges { display:flex; gap:12px; justify-content:center; margin-top:12px; flex-wrap:wrap; }
+    .hint { margin-top:14px; font-size:13px; color:#777; }
+    .hidden { display:none; }
   </style>
 </head>
-
 <body>
   <div class="wrap">
     <div class="card">
+      <img class="logo" alt="Scouter logo"
+        src="https://scouter-app.co/wp-content/uploads/brizy/imgs/Screen_Shot_2023-01-14_at_16.18.55-removebg-preview-1-292x128x0x0x292x128x1675075070.png" />
 
-      <img class="logo"
-           src="https://i.hizliresim.com/a1lgdxi.jpg"
-           alt="VexGPT logo" />
+      <h1>Scouter</h1>
+      <p class="sub">AI tips & live football scores. Get the app now.</p>
 
-      <h1>VexGPT</h1>
+      <a id="downloadBtn" class="cta" href="#">Download</a>
 
-      <p class="sub">
-        Dünyanın en güçlü yapay zekâ destekli futbol tahmin uygulaması<br>
-        Google Play'e yönlendiriliyorsunuz.
-      </p>
-
-      <a class="cta"
-         href="https://play.google.com/store/apps/details?id=com.vexgpt.app">
-        Google Play'den indirin
-
-      </a>
-
-      <div class="badge">
-        <a href="https://play.google.com/store/apps/details?id=com.vexgpt.app">
-          <img
-            alt="Get it on Google Play"
-            src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" />
+      <div class="badges">
+        <a id="storeBadge1" href="https://apps.apple.com/app/scouter-soccer-live-scores/id1569637963" aria-label="Download on the App Store">
+          <img alt="App Store" height="40"
+               src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=135x40&releaseDate=1620518400" />
+        </a>
+        <a id="storeBadge2" href="https://play.google.com/store/apps/details?id=com.artlines.scouter" aria-label="Get it on Google Play">
+          <img alt="Google Play" height="40"
+               src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" />
         </a>
       </div>
 
-      <div class="hint">
-       Yapay zeka destekli tahminler • Canlı analiz • Kazandıran içgörüler
+      <div id="inAppHint" class="hint hidden">
+        If this page stays here, tap <strong>Download</strong> again or choose “Open in browser” and retry.
       </div>
-
     </div>
   </div>
 
@@ -245,5 +158,6 @@
       });
     })();
   </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"0c940899cd8748bb8454f6014d7e07f6","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
